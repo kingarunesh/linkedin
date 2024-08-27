@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ job.job_title }}{% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-3" style="text-align: center; padding: 20px 0">
+            <img
+                src="{% if job.company.logo  %}{{ job.company.logo.url }}{% endif %}"
+                class="rounded"
+                alt="..."
+                style="width: 200px"
+            />
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title mb-3" style="font-size: 1.5rem">Posted by <a href="{% url "dashboard:profile" job.user.username %}">{{ job.user.first_name }} {{ job.user.last_name }}</a> from  <a href="{% url "company:detail_page" job.company.id %}">{{ job.company }}</a></h5>
+                    </div>
+                </div>               
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Job Title: </strong>{{ job.job_title }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Location Type: </strong>{{ job.job_location_type }}</p>
+                    </div>
+                            
+                    <div class="col-md-6">
+                        <p><strong>Employment Type: </strong>{{ job.employment_type }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Total applied: </strong>0</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Last Apply: </strong>{{ job.till_apply }}</p>
+                    </div>
+                            
+                    <div class="col-md-6">
+                        <p><strong>Last Updated: </strong>{{ job.last_updated }}</p>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 2rem">
+                    {% if job.user == request.user %}
+
+                    <div class="col-md-3">
+                        <a href="{% url "company:create_job" job.company.id %}" class="btn btn-primary">Create Job</a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="{% url "company:list_job" %}" class="btn btn-success">Jobs</a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="{% url "company:edit_job" job.id %}" class="btn btn-warning">Edit</a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="{% url "company:delete_job" job.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+
+                    {% else %}
+
+                    {% if apply_job %}
+                    <div class="col-md-2">
+                        <a href="{% url "company:apply_job" job.id %}" class="btn btn-success">Applied</a>
+                    </div>
+                    {% else %}
+                    <div class="col-md-2">
+                        <a href="{% url "company:apply_job" job.id %}" class="btn btn-primary">Apply</a>
+                    </div>
+                    {% endif %}
+
+                    {% if saved_job %}
+                    <div class="col-md-2">
+                        <a href="{% url "company:save_job" job.id %}" class="btn btn-danger">Saved</a>
+                    </div>
+                    {% else %}
+                    <div class="col-md-2">
+                        <a href="{% url "company:save_job" job.id %}" class="btn btn-warning">Save</a>
+                    </div>
+                    {% endif %}
+
+                    {% endif %}
+                </div> 
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Skills</h5>
+        <p>{{ job.skills }}</p>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Qualifications</h5>
+        <p>{{ job.qualifications }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Responsibilities</h5>
+        <p>{{ job.responsibilities }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">About Job</h5>
+        <p>{{ job.about_job }}</p>
+    </div>
+</div>
+
+</main>
+
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} - (@{{ user.username }}){% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="row justify-content-center column-gap-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Profile Views</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">VISITED USER</th>
+                                    <th scope="col">DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for view in profile_views %}
+                                <tr>
+                                    <th scope="row">{{ forloop.revcounter }}</th>
+
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <a href="{% url "dashboard:profile" view.visited_user.username %}">
+                                                <img
+                                                    src="{{ view.visited_user.profile.profile_image.url }}"
+                                                    alt=""
+                                                    style="width: 50px; height: 50px; border-radius: 50%"
+                                                />
+                                                </a>
+                                            </div>
+                                            <div class="col-8">
+                                                <div>
+                                                    <div><a href="{% url "dashboard:profile" view.visited_user.username %}">{{ view.visited_user.username }}</a></div>
+                                                    <div>
+                                                        {{ view.visited_user.first_name }} {{ view.visited_user.last_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>{{ view.visited_datetime }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

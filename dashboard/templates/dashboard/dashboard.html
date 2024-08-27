@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} - (@{{ user.username }}){% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="row justify-content-center column-gap-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Account</h5>
+
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item p-3"><a href="{% url "dashboard:profile" user.username %}">Profile</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "dashboard:edit_profile" %}">Edit Profile</a></li>
+                            <li class="list-group-item p-3"> <a href="{% url "authapp:change_password" %}">Change Password</a></li>
+                            <li class="list-group-item p-3"> <a href="{% url "dashboard:edit_profile" %}">Account Type (Private/Public)</a></li>
+                            <li class="list-group-item p-3"> <a href="{% url "authapp:delete_account" %}" onclick="">Delete Account</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Post</h5>
+
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item p-3"><a href="{% url "post:add_post" %}">New Post</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "post:list_post" user.username %}">Post List</a></li>
+                            <li class="list-group-item p-3"> <a href="{% url "post:list_post" user.username %}">Edit Post</a></li>
+                            <li class="list-group-item p-3"> <a href="{% url "post:list_post" user.username %}">Delete Post</a></li>
+                            <li class="list-group-item p-3"> <a href="{% url "post:list_post" user.username %}" onclick="">Liked Posts</a></li>
+                            <li class="list-group-item p-3"> <a href="{% url "post:saved_list_post" %}" onclick="">Saved Posts</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Company Page</h5>
+
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item p-3"><a href="{% url "company:page_list" %}">List Page</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:create_page" %}">Create Page</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:page_list" %}">Edit Page</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:page_list" %}">Detail Page</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:follow_page_list" %}">Follow Pages</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Job</h5>
+
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item p-3"><a href="{% url "company:list_job" %}">List Jobs</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:list_job" %}">Create Jobs</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:list_job" %}">Edit Jobs</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:list_job" %}">Delete Jobs</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:list_job" %}">Apply Jobs</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:applied_job_list" %}">Applied Jobs</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:list_job" %}">Saved Jobs</a></li>
+                            <li class="list-group-item p-3"><a href="{% url "company:saved_job_list" %}">Saved Job List</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

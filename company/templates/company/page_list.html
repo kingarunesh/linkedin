@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} - (@{{ user.username }}){% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="row justify-content-center column-gap-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <!--NOTE-->
+
+                <!-- Bordered Tabs Justified -->
+                <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                    <li class="nav-item flex-fill" role="presentation">
+                        <button
+                            class="nav-link w-100 active"
+                            id="home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#bordered-justified-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="home"
+                            aria-selected="true"
+                        >
+                            <strong>Pages</strong>
+                        </button>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation">
+                        <button
+                            class="nav-link w-100"
+                            id="profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#bordered-justified-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="profile"
+                            aria-selected="false"
+                        >
+                            <strong>Your Pages</strong>
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                    <div
+                        class="tab-pane fade show active"
+                        id="bordered-justified-home"
+                        role="tabpanel"
+                        aria-labelledby="home-tab"
+                    >
+                        {% include "company/includes/all_pages.html" %}
+                    </div>
+                    <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+                        {% include "company/includes/personal_pages.html" %}
+                    </div>
+                </div>
+                <!-- End Bordered Tabs Justified -->
+
+                <!--NOTE-->
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

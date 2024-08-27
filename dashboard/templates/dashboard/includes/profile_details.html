@@ -1,0 +1,187 @@
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-3" style="text-align: center; padding: 20px 0">
+            <img
+                src="{% if user_profile.profile_image  %}{{ user_profile.profile_image.url }}{% endif %}"
+                class="rounded"
+                alt="..."
+                style="width: 200px"
+            />
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title" style="font-size: 2rem">{{ user.first_name }} {{ user.last_name }} {% if user_profile.verify %}<i class="bi bi-patch-check-fill" style="color:blue"></i>{% endif %}</h5>
+                    </div>
+
+                    <div class="col-2" style="padding-top: 1.2rem;">
+                        {% if request.user == user %}
+                        <a href="{% url "dashboard:edit_profile" %}" style="font-size: 20px;"><i class="bi bi-pencil-square"></i></a>
+                        {% else %}
+
+                            {% if blocked %}
+                            <a href="{% url "dashboard:block_unblock_user" user.username %}" class="btn btn-success">Unblock</a>
+                            {% else %}
+                            <a href="{% url "dashboard:block_unblock_user" user.username %}" class="btn btn-danger">Block</a>
+                            {% endif %}
+                        
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Username: </strong>{{ user.username }}</p>
+
+                        <p><strong>Email Address: </strong>{{ user.email }}</p>
+
+                        <p>
+                            <strong>Website: </strong
+                            ><a href="{{ user_profile.website }}" target="_blank">{{ user_profile.website }}</a>
+                        </p>
+
+                        <p><strong>Date Of Birth: </strong>{{ user_profile.dob }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Headline: </strong>{{ user_profile.headline }}</p>
+
+                        <p><strong>Contact Number: </strong>{{ user_profile.contact_number }}</p>
+
+                        <p>
+                            <strong>Location: </strong>
+                            {{ user_profile.city }}, {{ user_profile.state }}, {{ user_profile.country }}
+                        </p>
+
+                        <p><strong>Joined Date: </strong>{{ user.date_joined }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--NOTE :           follow/unfollow              -->
+
+                    {% if follow_unfollow == True %}
+                    <!--    unfollow      -->
+                    <div class="col-md-4">
+                        {% if follow_accepted %}
+                        <a href="{% url "dashboard:follow_user" user.id %}" class="btn btn-danger position-relative mt-4">Unfollow</a>
+                        {% else %}
+                        <a href="{% url "dashboard:follow_user" user.id %}" class="btn btn-secondary position-relative mt-4">pending</a>
+                        {% endif %}
+                    </div>
+
+                    {% elif follow_unfollow == False %}
+                    <!--    follow      -->
+                    <div class="col-md-4">
+                        <a href="{% url "dashboard:follow_user" user.id %}" class="btn btn-success position-relative mt-4">Follow</a>
+                    </div>
+                    {% endif %}
+                    
+
+                    <!--NOTE :           following              -->
+                    <div class="col-md-4">
+                        <button
+                            type="button"
+                            class="btn btn-primary position-relative mt-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#following"
+                        >
+                            Following
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ total_followings }}
+                            </span>
+                        </button>
+                    </div>
+
+                    <!--NOTE :           follower              -->
+                    <div class="col-md-4">
+                        <button
+                            type="button"
+                            class="btn btn-primary position-relative mt-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#followers"
+                        >
+                            Followers
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ total_followers }}
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--SECTION :           following                   -->
+<div class="modal fade" id="following" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Following</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% for following in followings %}
+                <div class="row">
+                    <div class="col-4">
+                        <a href="{% url "dashboard:profile" following.following.username %}">
+                        <img src="{{following.following.profile.profile_image.url}}" alt="" width="50" />
+                        </a>
+                    </div>
+
+                    <div class="col-8">
+                        <p>
+                        <a href="{% url "dashboard:profile" following.following.username %}">
+                                {{following.following.username}}
+                            </a>
+                        </p>
+
+                        <p>{{following.following.first_name}} {{following.following.last_name}}</p>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--SECTION :           Followers                   -->
+<div class="modal fade" id="followers" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Followers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% for follower in followers %}
+                <div class="row">
+                    <div class="col-4">
+                        <a href="{% url "dashboard:profile" follower.user.username %}">
+                        <img src="{{ follower.user.profile.profile_image.url }}" alt="" width="50" />
+                        </a>
+                    </div>
+
+                    <div class="col-8">
+                        <a href="{% url "dashboard:profile" follower.user.username %}">
+                            <p>{{ follower.user.username }}</p>
+                        </a>
+
+                        <p>{{ follower.user.first_name }} {{ follower.user.last_name }}</p>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

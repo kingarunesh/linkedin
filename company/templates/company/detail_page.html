@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ page.name }}{% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-12">
+            <img
+                src="{% if page.cover_image  %}{{ page.cover_image.url }}{% endif %}"
+                class="rounded"
+                alt="..."
+                style="width: 100%; height: 250px"
+            />
+        </div>
+
+        <div class="col-md-3" style="text-align: center; padding: 20px 0">
+            <img
+                src="{% if page.logo  %}{{ page.logo.url }}{% endif %}"
+                class="rounded"
+                alt="..."
+                style="width: 200px"
+            />
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title" style="font-size: 2rem">{{ page.name }}</h5>
+                    </div>
+
+                    <div class="col-2" style="padding-top: 1.2rem;">
+                        {% if request.user == page.user %}
+                        <a href="{% url "company:edit_page" page.id %}" title="edit" style="font-size: 20px;"><i class="bi bi-pencil-square"></i></a>
+
+                        <a href="{% url "company:delete_page" page.id %}" title="delete" style="font-size: 20px; color: red"><i class="bi bi-trash"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Owner: </strong> <a href="{% url "dashboard:profile" page.user.username %}">{{ page.user }}</a></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Headline: </strong> {{ page.headline }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Website: </strong> <a href="{{ page.website }}">{{ page.website }}</a></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Industry: </strong> {{ page.industry }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Organization Size: </strong> {{ page.organization_size }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Organization Type: </strong> {{ page.organization_type }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Contact Number: </strong> {{ page.contact_number }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Email: </strong> {{ page.email_address }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Location: </strong> {{ page.address }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Founded Year: </strong> {{ page.year_founded }}</p>
+                    </div>
+                </div>
+
+                <!--SECTION-->
+                <!--NOTE :           follow/unfollow              -->
+
+                <div class="row">
+                    <div class="col-6">
+                        {% if page_follow %}
+                        <a href="{% url "company:follow_page" page.id %}" class="btn btn-danger">Unfollow ({{ total_page_follower }})</a>
+                        {% else %}
+                        <a href="{% url "company:follow_page" page.id %}" class="btn btn-primary">Follow ({{ total_page_follower }})</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-6">
+                        <a href="{% url "company:list_job" %}" class="btn btn-primary">Jobs</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Description</h5>
+        <p>{{ page.description }}</p>
+    </div>
+</div>
+
+</main>
+
+{% endblock content %}

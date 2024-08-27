@@ -1,0 +1,105 @@
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <!-- NOTE :                         home                                        -->
+        <li class="nav-item">
+            <a class="nav-link{% if request.path != "/" %} collapsed {% endif %}" href="{% url "home:home" %}">
+                <i class="bi bi-house-door"></i>
+                <span>Home</span>
+            </a>
+        </li>
+
+        <!-- NOTE :                            explore                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "explore:explore" %}">
+                <i class="bi bi-search"></i>
+                <span>Explore</span>
+            </a>
+        </li>
+         
+        <!-- NOTE :                            Profile                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "dashboard:profile" current_user.username %}">
+                <i class="bi bi-person"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+
+        <!-- NOTE :                          add new posts                                      -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "post:add_post" %}">
+               <i class="bi bi-plus-lg"></i>
+                <span>Post</span>
+            </a>
+        </li>
+
+        <!-- NOTE :                          all posts                                      -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "post:list_post" current_user.username %}">
+               <i class="bi bi-file-earmark-post"></i>
+                <span>Your Posts</span>
+            </a>
+        </li>
+
+        <!-- NOTE :                            jobs                                      -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "company:list_job" %}">
+                <i class="bi bi-briefcase"></i>
+                <span>Jobs</span>
+            </a>
+        </li>   
+
+        <!-- NOTE :                            Pages                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "company:page_list" %}">
+                <i class="bi bi-building"></i>
+                <span>Company</span>
+            </a>
+        </li>
+
+        <!-- NOTE :                            Notification                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "notification:notification" %}">
+                <i class="bi bi-bell"></i>
+                <span>Notification</span>
+            </a>
+        </li>
+
+
+        {% if not user.is_authenticated %}
+        <!-- NOTE :                            Login                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "authapp:login" %}">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Login</span>
+            </a>
+        </li>
+
+        <!-- NOTE :                            Register                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "authapp:register" %}">
+                <i class="bi bi-card-list"></i>
+                <span>Register</span>
+            </a>
+        </li>
+
+        {% else %}
+
+        <!-- NOTE :                            Dashboard                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "dashboard:dashboard" %}">
+                <i class="bi bi-speedometer"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <!-- NOTE :                            Logout                              -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "authapp:logout" %}">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+        {% endif %}
+    </ul>
+</aside>

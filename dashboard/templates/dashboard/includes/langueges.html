@@ -1,0 +1,29 @@
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-11">
+                    <h5 class="card-title"><i class="bi bi-translate"></i> &nbsp; Languege ({{langueges.count}})</h5>
+                </div>
+
+                <div class="col-1 p-2">
+                    {% if request.user == user %}
+                    <a href="{% url "dashboard:language_add" %}" style="font-size: 20px"><i class="bi bi-plus-lg"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+
+            
+
+            {% for languege in langueges %}
+                <span class="badge bg-info text-dark m-2" style="font-size: 1rem">
+                    {{ languege.lang }}
+                        {% if request.user == languege.user %}
+                            <a href="{% url "dashboard:language_edit" languege.id %}" style="padding-left: 1rem; padding-right: 1rem; color: green;"><i class="bi bi-pencil-square"></i></a>
+                            <a href="{% url "dashboard:language_delete" languege.id %}" style="color: red"><i class="bi bi-trash3"></i></a>
+                        {% endif %}
+                </span>
+            {% endfor %}
+        </div>
+    </div>
+</div>

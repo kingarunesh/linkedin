@@ -1,0 +1,82 @@
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-11">
+                    <h5 class="card-title"><i class="bi bi-book"></i> &nbsp; Education ({{educations.count}})</h5>
+                </div>
+
+                <div class="col-1 p-2">
+                    {% if request.user == user %}
+                    <a href="{% url "dashboard:education_add" %}" style="font-size: 20px"><i class="bi bi-plus-lg"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Default Accordion -->
+            <div class="accordion" id="accordionExample">
+                <!--NOTE :      1           -->
+
+                {% for education in educations %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#{{education.unique_id}}{{education.id}}"
+                            aria-expanded="true"
+                            aria-controls="{{education.unique_id}}{{education.id}}"
+                        >
+                            {{ education.school }}
+                        </button>
+                    </h2>
+                    <div
+                        id="{{education.unique_id}}{{education.id}}"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#accordionExample"
+                    >
+                        <div class="accordion-body">
+                            <h4><strong>{{ education.school }}</strong></h4>
+
+                            <p style="color: #444">{{ education.degree }}</p>
+
+                            <p style="color: #888">{{ education.description|truncatechars:150 }}</p>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <i class="bi bi-calendar-check"></i> &nbsp; {{ education.start_date }} -
+                                    {{education.end_date}}
+                                </div>
+                                <div class="col-md-4"><i class="bi bi-mortarboard-fill"></i> &nbsp; {{ education.grade }}</div>
+                            </div>
+
+                            {% if request.user == education.user %}
+                            <div class="row pt-4">
+                                <div class="col-6">
+                                    <a href="{% url "dashboard:education_edit" education.id %}" class="btn btn-success">Edit <i class="bi bi-pencil-square"></i></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{% url "dashboard:education_delete" education.id %}" class="btn btn-danger">Delete <i class="bi bi-trash3"></i></a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!--NOTE :     1 end             -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+
+
+
+
+
+
+
+-->

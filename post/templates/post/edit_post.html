@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}Linkedin{% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="card pt-4">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <!---->
+                        {{ form }}
+
+                        <input type="submit" class="btn btn-primary" value="Update" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock content %}

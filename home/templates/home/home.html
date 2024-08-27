@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}Home{% endblock title %}
+
+<!---->
+
+{% block content %}
+<main id="main" class="main">
+    <section class="section dashboard">
+        <div class="row justify-content-center column-gap-5">
+            <!-- NOTE :             posts             -->
+            <div class="col-md-8">
+                <!--NOTE :          message             -->
+                {% if messages %}
+                <!---->
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                <!---->
+                {% endif %}
+
+                <!--NOTE :          post & job tab           -->
+                <ul class="nav nav-tabs nav-tabs-bordered d-flex p-1" id="borderedTabJustified" role="tablist">
+                    <li class="nav-item flex-fill" role="presentation">
+                        <button
+                            class="nav-link w-100 active"
+                            id="home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#bordered-justified-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="home"
+                            aria-selected="true"
+                        >
+                            <strong style="font-size: 20px">Post</strong>
+                        </button>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation">
+                        <button
+                            class="nav-link w-100"
+                            id="profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#bordered-justified-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="profile"
+                            aria-selected="false"
+                        >
+                            <strong style="font-size: 20px">Jobs</strong>
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content pt-4" id="borderedTabJustifiedContent">
+                    <div
+                        class="tab-pane fade show active"
+                        id="bordered-justified-home"
+                        role="tabpanel"
+                        aria-labelledby="home-tab"
+                    >
+                        {% include "home/includes/home_posts.html" %}
+                    </div>
+                    <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+                        {% include "home/includes/home_jobs.html" %}
+                    </div>
+                </div>
+                <!--!          end post & job tab           -->
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock content %}

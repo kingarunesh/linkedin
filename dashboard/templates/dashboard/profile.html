@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} - (@{{ user.username }}){% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <!--SECTION :     profile details      -->
+    {% include "dashboard/includes/profile_details.html" %}
+
+    <!--SECTION :     analytics      -->
+    {% include "dashboard/includes/analytics.html" %}
+
+    <!--SECTION :     about      -->
+    {% include "dashboard/includes/about.html" %}
+
+    <!--SECTION :          posts          -->
+    <div class="row">
+        <!--NOTE :     skills      -->
+        {% include "dashboard/includes/skills.html" %}
+
+        <!--NOTE :     langueges      -->
+        {% include "dashboard/includes/langueges.html" %}
+
+        <!--NOTE :          education           -->
+        {% include "dashboard/includes/education.html" %}
+
+        <!--NOTE :     experiences      -->
+        {% include "dashboard/includes/experiences.html" %}
+
+        <!--NOTE :     projects      -->
+        {% include "dashboard/includes/projects.html" %}
+    </div>
+</main>
+
+{% endblock content %}

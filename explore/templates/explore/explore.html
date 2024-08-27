@@ -1,0 +1,81 @@
+
+
+
+
+
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}Explore...{% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="row justify-content-center column-gap-5">
+
+        <div class="mb-4">
+            <form action="{% url "explore:search_user" %}" method="GET">
+                <input type="text" class="form-control" name="q" id="exampleDataList" placeholder="Type to search..." autofocus />
+            </form>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Profile Views</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">USER</th>
+                                    <th scope="col">Followers</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for follow in top_followers %}
+                                <tr>
+                                    <th scope="row">{{ forloop.revcounter }}</th>
+
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <a href="{% url "dashboard:profile" follow.user.username %}">
+                                                <img
+                                                    src="{{ follow.user.profile.profile_image.url }}"
+                                                    alt=""
+                                                    style="width: 50px; height: 50px; border-radius: 50%"
+                                                />
+                                                </a>
+                                            </div>
+                                            <div class="col-8">
+                                                <div>
+                                                    <div><a href="{% url "dashboard:profile" follow.user.username %}">{{ follow.user.username }}</a></div>
+                                                    <div>
+                                                        {{ follow.user.first_name }} {{ follow.user.last_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>{{ follow.total_followers }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

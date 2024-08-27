@@ -1,0 +1,73 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title" style="font-size: 1.6rem">Analytics</h5>
+
+        <div class="row g-0">
+
+            <!--ERROR :         seprate later - person view and other view for user                 -->
+
+            {% if request.user == user %}
+            
+            <div class="col-md-4">
+                <div class="card-body">
+                    <p>
+                        <a href="{% url "dashboard:profile_view_list" %}"><i class="bi bi-eye-fill"></i> Profile views ({{profile_view}})</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-body">
+                    <p>
+                        <a href="{% url "post:saved_list_post" %}"><i class="bi bi-bookmark-fill"></i> Saved Posts {{ total_bookmark_posts }}</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-body">
+                    <p>
+                        <a href="{% url "company:applied_job_list" %}">
+                            <i class="bi bi-briefcase-fill"></i> You Applied Jobs ({{ applied_jobs.count }})
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-body">
+                    <a href="{% url "company:saved_job_list" %}">
+                        <i class="bi bi-save"></i> Saved Jobs ({{ saved_jobs.count }})
+                    </a>
+                </div>
+            </div>
+
+            {% endif %}
+
+            <div class="col-md-4">
+                <div class="card-body">
+                    <p>
+                        <a href="{% url "post:list_post" user.username %}"><i class="bi bi-file-earmark-post"></i> Posts ({{total_posts}})</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-body">
+                    <p>
+                        <a href="{% url "company:page_list" %}"><i class="bi bi-file-earmark-post"></i> Pages ({{user_pages.count}})</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-body">
+                    <p>
+                        <a href="{% url "company:list_job" %}"><i class="bi bi-file-earmark-post"></i> Job Posted ({{total_posts}})</a>
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

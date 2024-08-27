@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} - (@{{ user.username }}){% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="row justify-content-center column-gap-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <!--NOTE-->
+
+               <div class="card p-4">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h1 style="font-weight: bold;">Following Page list</h1>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="{% url "company:create_page" %}" class="btn btn-primary">Create New Page</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!---->
+                {% for page in page_follow_list %}
+
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ page.page.logo.url }}" class="img-fluid rounded-start" alt="..." style="height:100%" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ page.page.name }}</h5>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Headline: </strong> {{ page.page.headline }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Website: </strong> <a href="{{ page.page.website }}">{{ page.page.website }}</a></p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Industry: </strong> {{ page.page.industry }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Organization Type: </strong> {{ page.page.organization_type }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Jobs: </strong> {{ page.page.job_post_company.count }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Followers: </strong>{{ page.page.page_following.count }}</p>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="row" style="margin-top: 2rem">
+                                    <div class="col-md-2">
+                                        <a href="{% url "company:detail_page" page.page.id %}" class="btn btn-info">View</a>
+                                    </div>
+                                </div>
+                                
+
+                                <!---->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor%}
+
+                <!--NOTE-->
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

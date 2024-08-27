@@ -1,0 +1,42 @@
+<div class="col-md-10">
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+
+                {% for applied in applied_jobs %}
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-2">
+                            <a href="{% url "company:detail_page" applied.job.company.id %}">
+                                <img src="{{ applied.job.company.logo.url }}" alt="" style="width: 75px; height: 75px">
+                            </a>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-12"><h5 class="card-title" style="font-weight: bold; font-size: 1.6rem">{{ applied.job.job_title }}</h5></div>
+
+                                <div class="col-12 mb-2">
+                                    <strong>Company: </strong><a href="{% url "company:detail_page" applied.job.company.id %}">{{ applied.job.company.name }}</a>
+                                </div>
+
+                                <div class="col-12 mb-2">
+                                    <strong>Posted by: </strong><a href="{% url "dashboard:profile" applied.job.user.username %}">{{ applied.job.user.first_name }} {{ applied.job.user.last_name }}</a>
+                                </div>
+
+                                <div class="col-12"><strong>Applied Date: </strong>{{ applied.applied_date }}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 mt-5" style="text-align:center">
+                            <a href="{% url "company:detail_job" applied.job.id %}" class="btn btn-info">View</a>
+                        </div>
+                    </div>
+                </li>
+
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div>
+    {% for noti in follow_notification %}
+    <div class="row">
+        <div class="col-md-2">
+            <a href="{% url "dashboard:profile" noti.s_user.username %}">
+                <img
+                    src="{{ current_user_profile.profile_image.url }}"
+                    alt=""
+                    style="width: 50px; height: 50px; border-radius: 50%"
+                />
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url "dashboard:profile" noti.s_user.username %}"><strong>{{ noti.s_user }}</strong></a> requested to follow you
+        </div>
+        <div class="col-md-4">
+            <a href="{% url "dashboard:follow_accept" noti.s_user %}" class="btn btn-primary">Confirm</a>
+        </div>
+    </div>
+     <hr />
+    {% endfor %}
+
+   
+</div>

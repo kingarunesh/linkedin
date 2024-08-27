@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}Home{% endblock title %}
+
+<!---->
+
+{% block content %}
+<main id="main" class="main">
+    <section class="section dashboard">
+        <div class="row justify-content-center column-gap-5">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">New Post</div>
+
+                        <form method="POST" enctype="multipart/form-data" novalidate>
+                            <div class="modal-body">
+                                {% csrf_token %}
+                                <!---->
+                                {{form}}
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="submit" value="Post" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock content %}

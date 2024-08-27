@@ -1,0 +1,115 @@
+{% load static %}
+
+<header id="header" class="header fixed-top d-flex align-items-center">
+    <!--NOTE :     logo     -->
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center">
+            <img src="{% static 'assets/img/logo.png' %}" alt="" />
+            <span class="d-none d-lg-block">Linkedin</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+
+    <!--NOTE :     search    -->
+    <div class="search-bar">
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+            <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
+            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            <!--NOTE :     search mobile     -->
+            <li class="nav-item d-block d-lg-none">
+                <a class="nav-link nav-icon search-bar-toggle" href="#">
+                    <i class="bi bi-search"></i>
+                </a>
+            </li>
+
+            {% if request.user.is_authenticated %}
+            <!--NOTE :     notification     -->
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-icon" href="{% url "notification:notification" %}">
+                    <i class="bi bi-bell"></i>
+                    <span class="badge bg-primary badge-number">{{ total_notification }}</span> </a
+                ><!-- End Notification Icon -->
+            </li>
+
+            <!--NOTE :     message     -->
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <i class="bi bi-chat-left-text"></i>
+                    <span class="badge bg-success badge-number">3</span> </a
+                >
+            </li>
+
+            <!--NOTE :     profile     -->
+            <li class="nav-item dropdown pe-3">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <img src="{% if current_user_profile.profile_image  %}{{ current_user_profile.profile_image.url }}{% endif %}" alt="Profile" class="rounded-circle" />
+                    <span class="d-none d-md-block dropdown-toggle ps-2">{{ current_user.username }}</span> </a
+                ><!-- End Profile Iamge Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li class="dropdown-header">
+                        <h6>{{ current_user.first_name }} {{ current_user.last_name }}</h6>
+                        <span>{{ current_user_profile.headline }}</span>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{% url "dashboard:profile" current_user.username %}">
+                            <i class="bi bi-person"></i>
+                            <span>My Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{% url "dashboard:dashboard" %}">
+                            <i class="bi bi-speedometer"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{% url "authapp:logout" %}">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Sign Out</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- End Profile Dropdown Items -->
+            </li>
+            {% else %}
+            <li>
+                {% comment %} <a style={"font-size: 18px"} href="#"> {% endcomment %}
+                <a style="font-size: 18px; margin-right: 1rem; color: #333;" href="{% url "authapp:login" %}">
+                    <i class="bi bi-box-arrow-in-right"></i> <span>Login</span>
+                </a>
+            </li>
+
+            <li>
+                <a style="font-size: 18px; margin-right: 2rem; color: #333;" href="{% url "authapp:register" %}">
+                    <i class="bi bi-card-list"></i> <span>Register</span>
+                </a>
+
+            </li>
+            {% endif %}
+            <!-- End Profile Nav -->
+        </ul>
+    </nav>
+    <!-- End Icons Navigation -->
+</header>

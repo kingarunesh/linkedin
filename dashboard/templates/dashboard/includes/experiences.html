@@ -1,0 +1,96 @@
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-11">
+                    <h5 class="card-title"><i class="bi bi-person-workspace"></i> &nbsp; Experience ({{experiences.count}})</h5>
+                </div>
+
+                <div class="col-1 p-2">
+                    {% if request.user == user %}
+                    <a href="{% url "dashboard:experience_add" %}" style="font-size: 20px"><i class="bi bi-plus-lg"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Default Accordion -->
+            <div class="accordion" id="accordionExample">
+                <!--NOTE :      1           -->
+
+                {% for experience in experiences %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#{{experience.unique_id}}{{experience.id}}"
+                            aria-expanded="true"
+                            aria-controls="{{experience.unique_id}}{{experience.id}}"
+                        >
+                            {{ experience.job_title }}
+                        </button>
+                    </h2>
+                    <div
+                        id="{{experience.unique_id}}{{experience.id}}"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#accordionExample"
+                    >
+                        <div class="accordion-body">
+                            <h4><strong>{{ experience.job_title }}</strong></h4>
+
+                            <p style="color: #444">{{ experience.profile_title }}</p>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p style="color: #444"><i class="bi bi-building"></i> {{ experience.compnay_name }}</p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p style="color: #444"><i class="bi bi-alarm"></i> {{ experience.employment_type }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p style="color: #444"><i class="bi bi-geo-alt-fill"></i> &nbsp; {{ experience.location }}</p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p style="color: #444"><i class="bi bi-pin-map-fill"></i> {{ experience.location_type }}</p>
+                                </div>
+                            </div>
+
+                            <p style="color: #888">{{ experience.description|truncatechars:150 }}</p>
+
+                            <div>
+                                <i class="bi bi-calendar-check"></i> &nbsp; {{ experience.start_date }} - {{experience.end_date }}
+                            </div>
+
+                            {% if request.user == experience.user %}
+                            <div class="row pt-4">
+                                <div class="col-6">
+                                    <a href="{% url "dashboard:experience_edit" experience.id %}" class="btn btn-success">Edit <i class="bi bi-pencil-square"></i></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{% url "dashboard:experience_delete" experience.id %}" class="btn btn-danger">Delete <i class="bi bi-trash3"></i></a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!--NOTE :     1 end             -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+
+
+
+
+
+-->

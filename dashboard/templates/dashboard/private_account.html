@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} - (@{{ user.username }}){% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <!--SECTION :     profile details      -->
+    <div class="card mb-3">
+        <div class="alert alert-warning" role="alert" s>
+            <h1>Private Account</h1>
+            <p>Follow <strong>"{{ user.username }}"</strong> to see profile and posts.</p>
+        </div>
+    <div class="row g-0">
+        <div class="col-md-3" style="text-align: center; padding: 20px 0">
+            <img
+                src="{{ user_profile.profile_image.url }}"
+                class="rounded"
+                alt="..."
+                style="width: 200px"
+            />
+        </div>
+
+        <div class="col-md-9">
+            <div class="card-body">
+                
+
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title" style="font-size: 2rem">{{ user.first_name }} {{ user.last_name }} {% if user_profile.verify %}<i class="bi bi-patch-check-fill" style="color:blue"></i>{% endif %}</h5>
+                    </div>
+
+                    <div class="col-2" style="padding-top: 1.2rem;">
+                        {% if request.user == user %}
+                        <a href="{% url "dashboard:edit_profile" %}" style="font-size: 20px;"><i class="bi bi-pencil-square"></i></a>
+                        {% else %}
+
+                            {% if blocked %}
+                            <a href="{% url "dashboard:block_unblock_user" user.username %}" class="btn btn-success">Unblock</a>
+                            {% else %}
+                            <a href="{% url "dashboard:block_unblock_user" user.username %}" class="btn btn-danger">Block</a>
+                            {% endif %}
+                        
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Username: </strong>{{ user.username }}</p>
+
+                        <p><strong>Email Address: </strong>*****@mail.com</p>
+
+                        <p>
+                            <strong>Website: </strong
+                            ><a href="" target="_blank">*</a>
+                        </p>
+
+                        <p><strong>Date Of Birth: </strong>*</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Headline: </strong>{{ user_profile.headline }}</p>
+
+                        <p><strong>Contact Number: </strong>*</p>
+
+                        <p>
+                            <strong>Location: </strong>
+                            *
+                        </p>
+
+                        <p><strong>Date Of Birth: </strong>*</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--NOTE :           follow/unfollow              -->
+
+                    {% if follow_unfollow == True %}
+                    <!--    unfollow      -->
+                    <div class="col-md-4">
+                        {% if follow_accepted %}
+                        <a href="{% url "dashboard:follow_user" user.id %}" class="btn btn-danger position-relative mt-4">Unfollow</a>
+                        {% else %}
+                        <a href="{% url "dashboard:follow_user" user.id %}" class="btn btn-secondary position-relative mt-4">pending</a>
+                        {% endif %}
+                    </div>
+
+                    {% elif follow_unfollow == False %}
+                    <!--    follow      -->
+                    <div class="col-md-4">
+                        <a href="{% url "dashboard:follow_user" user.id %}" class="btn btn-success position-relative mt-4">Follow</a>
+                    </div>
+                    {% endif %}
+                    
+
+                    <!--NOTE :           following              -->
+                    <div class="col-md-4">
+                        <button
+                            type="button"
+                            class="btn btn-primary position-relative mt-4"
+                        >
+                            Following
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ total_followings }}
+                            </span>
+                        </button>
+                    </div>
+
+                    <!--NOTE :           follower              -->
+                    <div class="col-md-4">
+                        <button
+                            type="button"
+                            class="btn btn-primary position-relative mt-4"
+                        >
+                            Followers
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ total_followers }}
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</main>
+
+{% endblock content %}

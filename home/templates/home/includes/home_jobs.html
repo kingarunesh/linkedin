@@ -1,0 +1,84 @@
+<div class="col-md-12">
+
+                <div class="card p-4">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h1 style="font-weight: bold;">Jobs</h1>
+                            </div>
+                            <span>Following company related jobs only</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!---->
+                {% for job in jobs %}
+
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ job.company.logo.url }}" class="img-fluid rounded-start" style="height:100%;" />
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                
+
+                                <h5 class="card-title">Posted by <a href="{% url "dashboard:profile" job.user.username %}">{{ job.user.first_name }} {{ job.user.last_name }}</a> from  <a href="{% url "company:detail_page" job.company.id %}">{{ job.company }}</a></h5>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Job Title: </strong> {{ job.job_title }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Skills: </strong> {{ job.skills }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Job Location Type: </strong> {{ job.job_location_type }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Employment Type: </strong> {{ job.employment_type }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p><strong>Last Apply Date: </strong> {{ job.till_apply }}</p>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="row" style="margin-top: 2rem">
+                                    <div class="col-md-2">
+                                        <a href="{% url "company:detail_job" job.id %}" class="btn btn-info">View</a>
+                                    </div>
+
+                                    {% if job.user == request.user %}
+                                    <div class="col-md-3">
+                                        <a href="{% url "company:create_job" job.company.id %}" class="btn btn-primary">Create Job</a>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <a href="{% url "company:edit_job" job.id %}" class="btn btn-warning">Edit</a>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <a href="{% url "company:delete_job" job.id %}" class="btn btn-danger">Delete</a>
+                                    </div>
+
+                                   
+
+                                    {% endif %}
+                                    
+                                </div> 
+
+                                <!---->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor%}
+                <!---->
+            </div>

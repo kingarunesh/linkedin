@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}Linkedin {% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+
+            <!--NOTE :      post card          -->
+            <div class="col-lg-6">
+                        
+                <div class="card">
+                    <div class="row p-3">
+                        <div class="col-2">
+                            <a href="{% url "dashboard:profile" post.user.username %}">
+                                <img
+                                    src="{{ post.user.profile.profile_image.url }}"
+                                    alt="user_profile_photo"
+                                    class="rounded-circle"
+                                    style="width: 45px; height: 45px"
+                                />
+                            </a>
+                        </div>
+
+                        <div class="col-5">
+                            <div><strong><a href="{% url "dashboard:profile" post.user.username %}">{{ post.user.username }}</a></strong></div>
+                            <div style="color: #666;">{{ post.user.first_name }} {{ post.user.last_name }}</div>
+                        </div>
+
+                        <div class="col-5">
+                            <div style="color: #666;">{{ post.last_updated|date:"d-M-Y" }}</div>
+                        </div>
+                    </div>
+
+                    <img src="{{ post.image1.url }}" class="card-img-top" alt="..." />
+
+                    <div class="card-body pt-3">
+                        <p class="card-text" style="color: #555;">{{ post.description }}</p>
+                    </div>
+
+                    <hr />    
+
+                    <div class="row" style="padding: 0 2rem; padding-bottom: 1rem; font-size: 18px">
+                        <div class="col-4">
+
+                            {% if like_post %}
+                            <a href="{% url "post:post_like" post.id %}">
+                                <i class="bi bi-hand-thumbs-up-fill"></i> {{ post.like_post.count }}
+                            </a>
+                            {% else %}
+                            <a href="{% url "post:post_like" post.id %}">
+                                <i class="bi bi-hand-thumbs-up"></i> {{ post.like_post.count }}
+                            </a>
+                            {% endif %}
+
+
+                        </div>
+
+                        <div class="col-4">
+                            <a href="{% url "post:detail_post" post.id %}" ><i class="bi bi-chat-dots"></i> {{ post.comment_post.count }}</a>
+                        </div>
+
+                        <div class="col-4">
+                            {% if bookmark_post %}
+                            <a href="{% url "post:bookmark_post" post.id %}"><i class="bi bi-bookmark-fill"></i> {{ post.bookmark_post.count }}</a>
+                            {% else %}
+                            <a href="{% url "post:bookmark_post" post.id %}"><i class="bi bi-bookmark"></i> {{ post.bookmark_post.count }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if post.user == request.user %}
+                <div class="card">
+                    <div class="row p-3">
+                        <div class="col-md-4">
+                            <a href="{% url "post:edit_post" post.id %}" class="btn btn-success">Edit</a>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a href="{% url "post:post_delete" post.id %}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+
+                   
+            </div>
+
+            <!--NOTE :      comment card          -->
+            <div class="col-lg-6">
+                <div class="card">
+
+                    {% for comment in comments %}
+                    <div class="row p-3">
+                        <!---->
+                        <div class="col-3">
+                            <a href="{% url "dashboard:profile" comment.user.username %}">
+                                <img
+                                    src="{{ comment.user.profile.profile_image.url }}"
+                                    alt="user_profile_photo"
+                                    class="rounded-circle"
+                                    style="width: 45px; height: 45px"
+                                />
+                            </a>
+                        </div>
+
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div><strong><a href="{% url "dashboard:profile" comment.user.username %}">{{ comment.user.username }}</a></strong></div>
+                                    <div>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div style="color: #666;">{{ comment.created_date|date:"H:i d-M-Y" }}</div>
+                                </div>
+                            </div>
+
+                            <p class="pt-4" style="color: #555">{{ comment.text }}</p>
+                        </div>
+                    </div>
+
+                    <hr>
+                    {% endfor %}
+
+                    <!--NOTE :          comment form                -->
+                    <form method="POST" novalidate style="padding: 1rem 2rem">
+                        {% csrf_token %}
+
+                        <!---->
+
+                        {{ form }}
+
+                        <input type="submit" value="Comment" class="btn btn-primary mt-2" />
+                    </form>
+                    
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+<!-- End #main -->
+
+{% endblock content %}

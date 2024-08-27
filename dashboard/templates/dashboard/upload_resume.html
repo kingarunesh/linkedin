@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+<!---->
+
+{% load static %}
+
+<!---->
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} - (@{{ user.username }}){% endblock title %}
+
+<!---->
+
+{% block content %}
+
+<main id="main" class="main">
+    <div class="row justify-content-center column-gap-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <!--NOTE :          message             -->
+                        {% if messages %}
+                        <!---->
+                        {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        <!---->
+                        {% endif %}
+
+                        <h2 class="card-title">Upload Resume</h2>
+
+                        {% if old_resume %}
+                        <a href="{{ old_resume.resume.url }}">Your resume link</a>
+                        {% endif %}
+
+                        <form method="POST" enctype="multipart/form-data" novalidate class="pt-4">
+                            {% csrf_token %}
+
+                            <!---->
+                            {{ form }}
+
+                            <input type="submit" value="Upload" class="btn btn-primary" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}
